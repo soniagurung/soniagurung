@@ -62,7 +62,7 @@ const timeline = [
   { when: "now", what: "QA Engineer", where: "Jaamun Tech Pvt Ltd", note: "Testing web & mobile products end-to-end, writing Jest & Cypress suites." },
   { when: "now", what: "QA Engineer", where: "Neto Group LLC", note: "Keeping AI-powered products bug-free and release-ready." },
   { when: "~1 yr ago", what: "Freelance developer & QA", where: "Self-employed", note: "Where it all started — building and testing sites and apps for clients." },
-  { when: "before", what: "Class 12 & self-taught coding", where: "Bhutan 🇧🇹", note: "Finished school in Bhutan, then learned to code on my own, one bug at a time." },
+  { when: "before", what: "Class 12 & self-taught coding", where: "Bhutan 🇧🇹", note: "Completed school in Bhutan, then learned to code on my own, one bug at a time." },
 ];
 
 function Nav() {
@@ -166,7 +166,7 @@ function Index() {
           <h2 className="text-4xl font-bold sm:text-5xl">a little <span className="squiggle italic text-primary">about</span> me</h2>
           <div className="space-y-4 text-lg leading-relaxed">
             <p>
-              I grew up in <b>Bhutan</b>, finished class 12 there, and then taught myself to code — no bootcamp,
+              I grew up in <b>Bhutan</b>, completed class 12 there, and then taught myself to code — no bootcamp,
               just curiosity, docs and a lot of late nights. Now I live in <b>Nepal</b>.
             </p>
             <p>
