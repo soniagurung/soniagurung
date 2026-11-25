@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import photo from "@/assets/sonia-gurung.jpg.asset.json";
+import { useEffect, useState } from "react";
+import photo from "@/assets/sonia-portrait.jpg.asset.json";
 
 const TITLE = "Sonia Gurung — Developer & QA Engineer";
 const DESC =
@@ -66,55 +67,85 @@ const timeline = [
 
 function Nav() {
   const links = ["about", "skills", "work", "journey", "contact"];
+  const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-4 z-50 mx-auto flex w-[min(92%,64rem)] items-center justify-between rounded-full border-2 border-foreground bg-card px-5 py-2 shadow-sticker">
-      <a href="#top" className="font-hand text-2xl font-bold text-primary">sonia ✿</a>
-      <nav className="hidden gap-5 text-sm font-medium sm:flex">
-        {links.map((l) => (
-          <a key={l} href={`#${l}`} className="hover:text-primary">{l}</a>
-        ))}
-      </nav>
-      <a href="mailto:ccvyvy40@gmail.com" className="rounded-full bg-primary px-4 py-1.5 text-sm font-bold text-primary-foreground">say hi</a>
+    <header className="sticky top-3 z-50 mx-auto w-[min(94%,64rem)] fade-up">
+      <div className="flex items-center justify-between rounded-full border-2 border-foreground bg-card/95 px-4 py-2 shadow-sticker backdrop-blur sm:px-5">
+        <a href="#top" className="font-hand text-2xl font-bold text-primary">sonia ✿</a>
+        <nav className="hidden gap-5 text-sm font-medium md:flex">
+          {links.map((l) => (
+            <a key={l} href={`#${l}`} className="relative after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all hover:text-primary hover:after:w-full">{l}</a>
+          ))}
+        </nav>
+        <div className="flex items-center gap-2">
+          <a href="mailto:ccvyvy40@gmail.com" className="rounded-full bg-primary px-4 py-1.5 text-sm font-bold text-primary-foreground transition-transform hover:scale-105">say hi</a>
+          <button type="button" aria-label="Toggle menu" aria-expanded={open} onClick={() => setOpen((o) => !o)} className="grid h-9 w-9 place-items-center rounded-full border-2 border-foreground bg-secondary md:hidden">
+            <span className={`text-lg transition-transform ${open ? "rotate-45" : ""}`}>✿</span>
+          </button>
+        </div>
+      </div>
+      {open && (
+        <nav className="pop-in mt-2 grid gap-1 rounded-3xl border-2 border-foreground bg-card p-3 shadow-sticker md:hidden">
+          {links.map((l) => (
+            <a key={l} href={`#${l}`} onClick={() => setOpen(false)} className="rounded-2xl px-4 py-2 font-medium hover:bg-secondary">{l}</a>
+          ))}
+        </nav>
+      )}
     </header>
   );
 }
 
+function useReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll("[data-reveal]");
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }),
+      { threshold: 0.12 },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
 function Index() {
+  useReveal();
   return (
     <div id="top" className="overflow-x-hidden pb-10">
       <Nav />
 
       {/* Hero */}
-      <section className="mx-auto grid w-[min(92%,64rem)] items-center gap-12 pt-16 pb-20 md:grid-cols-[1.3fr_1fr]">
-        <div>
+      <section className="mx-auto grid w-[min(92%,64rem)] items-center gap-12 pt-12 pb-16 sm:pt-16 sm:pb-20 md:grid-cols-[1.3fr_1fr]">
+        <div className="fade-up text-center md:text-left">
           <p className="font-hand text-3xl text-primary">hii, i'm</p>
-          <h1 className="mt-1 text-6xl font-bold leading-[0.95] tracking-tight sm:text-7xl md:text-8xl">
+          <h1 className="mt-1 text-5xl font-bold leading-[0.95] tracking-tight sm:text-7xl md:text-8xl">
             Sonia <span className="italic font-medium text-primary">Gurung</span>
           </h1>
-          <p className="mt-6 max-w-lg text-lg text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-lg text-base sm:text-lg md:mx-0 text-muted-foreground">
             A developer who also breaks things for a living 🐞 — I build web & mobile apps and make sure they
             actually work before they reach real people.
           </p>
-          <div className="mt-6 flex flex-wrap gap-2 text-sm font-medium">
+          <div className="mt-6 flex flex-wrap justify-center gap-2 text-sm md:justify-start font-medium">
             <span className="sticker bg-secondary px-3 py-1">💻 web + app dev</span>
             <span className="sticker bg-accent px-3 py-1">🧪 QA engineer</span>
             <span className="sticker bg-butter px-3 py-1">📍 Bhutan → Nepal</span>
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
             <a href="#work" className="sticker sticker-hover bg-primary px-6 py-3 font-bold text-primary-foreground">see my work →</a>
             <a href="#contact" className="sticker sticker-hover bg-card px-6 py-3 font-bold">get in touch</a>
           </div>
         </div>
 
-        <div className="relative mx-auto w-64 sm:w-72">
-          <div className="sticker relative rotate-3 bg-card p-3 pb-14">
+        <div className="pop-in relative mx-auto w-60 [animation-delay:.3s] sm:w-72">
+          <div className="blob absolute -inset-6 -z-10 bg-secondary opacity-70" />
+          <div className="spin-slow absolute -right-10 -top-10 -z-10 h-24 w-24 rounded-full border-2 border-dashed border-primary" />
+          <div className="float-y sticker relative bg-card p-3 pb-14">
             <span className="tape -top-3 left-1/2 -translate-x-1/2 -rotate-3" />
-            <img src={photo.url} alt="Portrait of Sonia Gurung" className="aspect-[4/5] w-full rounded-lg object-cover" width={800} height={963} />
+            <img src={photo.url} alt="Portrait of Sonia Gurung" className="aspect-[4/5] w-full rounded-lg object-cover object-top" width={960} height={1280} />
             <p className="absolute bottom-3 left-0 right-0 text-center font-hand text-2xl">that's me :)</p>
           </div>
-          <span className="wiggle absolute -left-8 top-10 text-4xl">🌸</span>
+          <span className="wiggle absolute -left-6 top-10 sm:-left-8 text-4xl">🌸</span>
           <span className="wiggle absolute -right-6 bottom-20 text-3xl [animation-delay:1s]">✨</span>
-          <span className="sticker absolute -bottom-4 -left-10 -rotate-6 bg-sky px-3 py-1 font-hand text-xl">1+ yr of shipping</span>
+          <span className="sticker absolute -bottom-4 -left-4 -rotate-6 sm:-left-10 bg-sky px-3 py-1 font-hand text-xl">1+ yr of shipping</span>
         </div>
       </section>
 
@@ -130,9 +161,9 @@ function Index() {
       </div>
 
       {/* About */}
-      <section id="about" className="mx-auto w-[min(92%,64rem)] scroll-mt-24 py-24">
-        <div className="grid gap-10 md:grid-cols-[1fr_2fr]">
-          <h2 className="text-5xl font-bold">a little <span className="squiggle italic text-primary">about</span> me</h2>
+      <section id="about" className="mx-auto w-[min(92%,64rem)] scroll-mt-24 py-16 sm:py-24">
+        <div data-reveal className="grid gap-10 md:grid-cols-[1fr_2fr]">
+          <h2 className="text-4xl font-bold sm:text-5xl">a little <span className="squiggle italic text-primary">about</span> me</h2>
           <div className="space-y-4 text-lg leading-relaxed">
             <p>
               I grew up in <b>Bhutan</b>, finished class 12 there, and then taught myself to code — no bootcamp,
@@ -150,10 +181,10 @@ function Index() {
 
       {/* Skills */}
       <section id="skills" className="mx-auto w-[min(92%,64rem)] scroll-mt-24 py-12">
-        <h2 className="text-5xl font-bold">things i'm <span className="italic text-primary">good at</span></h2>
+        <h2 className="text-4xl font-bold sm:text-5xl">things i'm <span className="italic text-primary">good at</span></h2>
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
           {skillGroups.map((g, i) => (
-            <div key={g.title} className={`sticker sticker-hover ${g.bg} p-6 ${i % 2 ? "rotate-1" : "-rotate-1"}`}>
+            <div key={g.title} data-reveal style={{ transitionDelay: `${i * 90}ms` }} className={`sticker sticker-hover ${g.bg} p-6 ${i % 2 ? "rotate-1" : "-rotate-1"}`}>
               <h3 className="font-hand text-3xl font-bold">{g.title}</h3>
               <div className="mt-4 flex flex-wrap gap-2">
                 {g.items.map((s) => (
@@ -166,14 +197,14 @@ function Index() {
       </section>
 
       {/* Work */}
-      <section id="work" className="mx-auto w-[min(92%,64rem)] scroll-mt-24 py-24">
+      <section id="work" className="mx-auto w-[min(92%,64rem)] scroll-mt-24 py-16 sm:py-24">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 className="text-5xl font-bold">selected <span className="italic text-primary">work</span></h2>
+          <h2 className="text-4xl font-bold sm:text-5xl">selected <span className="italic text-primary">work</span></h2>
           <p className="font-hand text-2xl text-muted-foreground">built it, tested it, shipped it ✓</p>
         </div>
         <div className="mt-10 grid gap-8 sm:grid-cols-2">
-          {projects.map((p) => (
-            <a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer" className={`sticker sticker-hover group block bg-card ${p.rot}`}>
+          {projects.map((p, i) => (
+            <a key={p.name} data-reveal style={{ transitionDelay: `${i * 90}ms` }} href={p.url} target="_blank" rel="noopener noreferrer" className={`sticker sticker-hover group block bg-card ${p.rot}`}>
               <div className={`${p.bg} flex h-40 items-center justify-center rounded-t-[calc(var(--radius)-2px)] border-b-2 border-foreground text-6xl`}>
                 <span className="transition-transform group-hover:scale-125 group-hover:rotate-12">{p.emoji}</span>
               </div>
@@ -193,11 +224,11 @@ function Index() {
 
       {/* Journey */}
       <section id="journey" className="mx-auto w-[min(92%,48rem)] scroll-mt-24 py-12">
-        <h2 className="text-5xl font-bold">my <span className="italic text-primary">journey</span> so far</h2>
-        <ol className="mt-10 space-y-6 border-l-2 border-dashed border-foreground pl-8">
+        <h2 className="text-4xl font-bold sm:text-5xl">my <span className="italic text-primary">journey</span> so far</h2>
+        <ol className="mt-10 space-y-6 border-l-2 border-dashed border-foreground pl-6 sm:pl-8">
           {timeline.map((t, i) => (
-            <li key={i} className="relative">
-              <span className="absolute -left-[2.6rem] top-4 flex h-5 w-5 items-center justify-center rounded-full border-2 border-foreground bg-secondary" />
+            <li key={i} data-reveal className="relative">
+              <span className="absolute -left-[2.1rem] top-4 sm:-left-[2.6rem] flex h-5 w-5 items-center justify-center rounded-full border-2 border-foreground bg-secondary" />
               <div className="sticker bg-card p-5">
                 <p className="font-hand text-xl text-primary">{t.when}</p>
                 <h3 className="text-2xl font-bold">{t.what}</h3>
@@ -210,12 +241,12 @@ function Index() {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="mx-auto w-[min(92%,64rem)] scroll-mt-24 py-24">
-        <div className="sticker relative bg-secondary p-10 text-center sm:p-16">
+      <section id="contact" className="mx-auto w-[min(92%,64rem)] scroll-mt-24 py-16 sm:py-24">
+        <div data-reveal className="sticker relative bg-secondary p-6 py-10 text-center sm:p-16">
           <span className="tape -top-3 left-10 -rotate-6" />
           <span className="tape -top-3 right-10 rotate-6" />
           <p className="font-hand text-3xl text-primary">let's make something lovely</p>
-          <h2 className="mt-2 text-5xl font-bold sm:text-6xl">say hello 👋</h2>
+          <h2 className="mt-2 text-4xl font-bold sm:text-6xl">say hello 👋</h2>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a href="mailto:ccvyvy40@gmail.com" className="sticker sticker-hover bg-card px-6 py-3 font-bold">✉ ccvyvy40@gmail.com</a>
             <a href="tel:+9779824317734" className="sticker sticker-hover bg-card px-6 py-3 font-bold">☎ 9824317734</a>
