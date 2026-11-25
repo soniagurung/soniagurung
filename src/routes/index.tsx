@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const TITLE = "Sonia Gurung — Developer & QA Engineer";
 const SITE_URL = "https://soniagurung.github.io/";
-const SHARE_IMAGE = `${SITE_URL}images/sonia-og.jpg`;
+const SHARE_IMAGE = `${SITE_URL}images/sonia-portrait.jpg`;
 const DESC =
   "Meet Sonia Gurung, a Bhutanese developer and QA engineer based in Nepal. She builds web and mobile apps and tests products with React, Flutter, Node.js, Cypress and Jest.";
 
@@ -22,8 +22,8 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: SHARE_IMAGE },
       { property: "og:image:secure_url", content: SHARE_IMAGE },
       { property: "og:image:type", content: "image/jpeg" },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
+      { property: "og:image:width", content: "960" },
+      { property: "og:image:height", content: "1280" },
       { property: "og:image:alt", content: "Sonia Gurung, Developer and QA Engineer, Bhutan to Nepal" },
       { property: "og:locale", content: "en_US" },
       { property: "profile:first_name", content: "Sonia" },
