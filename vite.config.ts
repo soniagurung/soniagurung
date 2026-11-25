@@ -10,8 +10,8 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
-  // This repository is a project site served from /soniagurung/ on GitHub Pages.
-  base: "/soniagurung/",
+  // This is the account's root GitHub Pages site at soniagurung.github.io.
+  vite: { base: "/" },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

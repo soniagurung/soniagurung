@@ -1,36 +1,56 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import photo from "@/assets/sonia-portrait.jpg.asset.json";
 
 const TITLE = "Sonia Gurung — Developer & QA Engineer";
+const SITE_URL = "https://soniagurung.github.io/";
+const SHARE_IMAGE = `${SITE_URL}images/sonia-og.jpg`;
 const DESC =
-  "Sonia Gurung is a web, app and backend developer and QA engineer from Bhutan, based in Nepal. React, Next, Node, Nest, Flutter, Supabase, AWS, Jest & Cypress.";
+  "Meet Sonia Gurung, a Bhutanese developer and QA engineer based in Nepal. She builds web and mobile apps and tests products with React, Flutter, Node.js, Cypress and Jest.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: TITLE },
       { name: "description", content: DESC },
-      { name: "keywords", content: "Sonia Gurung, developer Nepal, QA engineer, React developer, Flutter developer, Bhutan developer, full stack" },
+      { name: "keywords", content: "Sonia Gurung, software developer Nepal, QA engineer Nepal, React developer, Flutter developer, Bhutanese developer, web developer, mobile app developer" },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
+      { name: "theme-color", content: "#fff8f1" },
       { property: "og:title", content: TITLE },
       { property: "og:description", content: DESC },
-      { property: "og:type", content: "profile" },
-      { property: "og:url", content: "/" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: SHARE_IMAGE },
+      { property: "og:image:secure_url", content: SHARE_IMAGE },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Sonia Gurung, Developer and QA Engineer, Bhutan to Nepal" },
+      { property: "og:locale", content: "en_US" },
+      { property: "profile:first_name", content: "Sonia" },
+      { property: "profile:last_name", content: "Gurung" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESC },
+      { name: "twitter:image", content: SHARE_IMAGE },
+      { name: "twitter:image:alt", content: "Sonia Gurung, Developer and QA Engineer, Bhutan to Nepal" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: SITE_URL },
+      { rel: "alternate", href: `${SITE_URL}sitemap.xml`, type: "application/xml", title: "Sitemap" },
+    ],
     scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Person",
+          url: SITE_URL,
+          image: `${SITE_URL}images/sonia-portrait.jpg`,
           name: "Sonia Gurung",
           jobTitle: "Software Developer & QA Engineer",
           email: "mailto:ccvyvy40@gmail.com",
           nationality: "Bhutan",
+          sameAs: ["https://soniagurung.github.io/"],
           address: { "@type": "PostalAddress", addressCountry: "NP" },
           worksFor: [
             { "@type": "Organization", name: "Jaamun Tech Pvt Ltd" },
@@ -140,7 +160,7 @@ function Index() {
           <div className="spin-slow absolute -right-10 -top-10 -z-10 h-24 w-24 rounded-full border-2 border-dashed border-primary" />
           <div className="float-y sticker relative bg-card p-3 pb-14">
             <span className="tape -top-3 left-1/2 -translate-x-1/2 -rotate-3" />
-            <img src={photo.url} alt="Portrait of Sonia Gurung" className="aspect-[4/5] w-full rounded-lg object-cover object-top" width={960} height={1280} />
+            <img src={`${import.meta.env.BASE_URL}images/sonia-portrait.jpg`} alt="Portrait of Sonia Gurung" className="aspect-[4/5] w-full rounded-lg object-cover object-top" width={960} height={1280} />
             <p className="absolute bottom-3 left-0 right-0 text-center font-hand text-2xl">that's me :)</p>
           </div>
           <span className="wiggle absolute -left-6 top-10 sm:-left-8 text-4xl">🌸</span>
